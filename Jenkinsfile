@@ -80,8 +80,7 @@ def test(String test_environment){
         sh "docker run --network=host -t -d --name api_tests_runner_${test_environment} marcisvitols/api-tests-runner:latest"
     try{
         sh "docker exec api_tests_runner_${test_environment} ls"
-        sh "docker exec api_tests_runner_${test_environment} cucumber PLATFORM=api_tests_runner_${test_environment} --format html test-output/report.html"
-    }
+        sh "docker exec api_tests_runner_${test_environment} cucumber PLATFORM=${test_environment} --format html --out test-output/report.html"     }
     finally{
         sh "docker cp api_tests_runner_${test_environment} /api-tests/test-output/report.html report_api_tests_runner_${test_environment}.html"
         sh "docker rm -f api_tests_runner_${test_environment}"
