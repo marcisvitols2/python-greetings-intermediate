@@ -8,12 +8,12 @@ pipeline{
         DOCKER_USERNAME = credentials('docker-username')
     }
     stages{
-        stage('build application'){
-
+        stage('build-app'){
             steps{
                 script{
+                    echo "Build ${GIT_COMMIT}"
                     echo "build python-greetings-app"
-                    build("marcisvitols/python-greetings-app:latest", "Dockerfile")
+                    build("marcisvitols/python-greetings-app:${GIT_COMMIT}", "Dockerfile")
                 } 
             }
         }
@@ -81,6 +81,6 @@ def test(String test_environment){
 
 def deploy(String deploy_environment){
     echo "Deployment of python-greetings-app on ${deploy_environment} is starting"
-    sh "kubectl set image deployment python-greetings-${deploy_environment} python-greetings-${deploy_environment}-pod=marcisvitols/python-greetings-app:latest"
+    sh "kubectl set image deployment python-greetings-${deploy_environment} python-greetings-${deploy_environment}-pod=marcisvitols/python-greetings-app:${GIT_COMMIT}"
 
 }
