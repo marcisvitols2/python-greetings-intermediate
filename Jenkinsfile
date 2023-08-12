@@ -21,7 +21,7 @@ pipeline{
 
             steps{
                 script{
-                    deploy("DEV")
+                    deploy("dev")
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline{
 
             steps{
                 script{
-                    test("DEV")
+                    test("dev")
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline{
 
             steps{
                 script{
-                    deploy("PROD")
+                    deploy("dev")
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline{
 
             steps{
                 script{
-                    test("PROD")
+                    test("dev")
                 }
             }
         }
@@ -75,12 +75,12 @@ def build(String tag, String dockerfile){
     sh "docker build -t ${tag} . -f ${dockerfile}"
     sh "docker push ${tag}"
 }
-def test(String environment){
-    echo "Testing of python-greetings-app on ${environment} is starting"
+def test(String test_environment){
+    echo "Testing of python-greetings-app on ${test_environment} is starting"
 }
 
-def deploy(String environment){
-    echo "Deployment of python-greetings-app on ${environment} is starting"
-    sh "kubectl set image deployment python-greetings-${environment} python-greetings-${environment}-pod=marcisvitols/python-greetings-app:latest"
+def deploy(String deploy_environment){
+    echo "Deployment of python-greetings-app on ${deploy_environment} is starting"
+    sh "kubectl set image deployment python-greetings-${deploy_environment} python-greetings-${deploy_environment}-pod=marcisvitols/python-greetings-app:latest"
 
 }
