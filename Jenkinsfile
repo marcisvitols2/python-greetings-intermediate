@@ -76,7 +76,7 @@ def build(String tag, String dockerfile){
     sh "docker push ${tag}"
 }
 def test(String test_environment){
-
+        echo "Testing of python-greetings-app on ${test_environment} is starting.."
         sh "docker run --network=host -t -d --name api_tests_runner_${test_environment} marcisvitols/api-tests-runner:latest"
     try{
         sh "docker exec api_tests_runner_${test_environment} ls"
