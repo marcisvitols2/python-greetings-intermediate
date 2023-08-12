@@ -34,7 +34,8 @@ pipeline{
                 stage('Tests for New Greeting suit'){
                     steps{
                         script{
-                         test("DEV")
+                            load(testBySuites.groovy).testBySuites("DEV","New Greetings")    
+                            test("DEV")
                         }
                     }
                     
@@ -42,7 +43,8 @@ pipeline{
                 stage('Tests for Old Greeting suit '){
                     steps{
                         script{
-                         test("DEV")
+                            load(testBySuites.groovy).testBySuites("DEV","Old Greetings")   
+                            test("DEV")
                         }
                     }
                 }
