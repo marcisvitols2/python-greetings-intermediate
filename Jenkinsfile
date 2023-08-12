@@ -8,18 +8,23 @@ pipeline{
 
             steps{
                 echo "build python-greetings-app"
+                build("marcisvitols/python-greetings-app:latest", "Dockerfile")
             }
         }
         stage('deploy-dev'){
 
             steps{
-                echo "Deploying python-greetings-app on dev"
+                script{
+                    deploy("DEV")
+                }
             }
         }
         stage('test-dev'){
 
             steps{
-                echo "Testing python-greetings-app on dev"
+                script{
+                    test("DEV")
+                }
             }
         }
         stage('approval'){
@@ -32,14 +37,43 @@ pipeline{
         stage('deploy-prod'){
 
             steps{
-                echo "Deploying python-greetings-app on prod"
+                script{
+                    deploy("PROD")
+                }
             }
         }
         stage('test-prod'){
 
             steps{
-                echo "Testing python-greetings-app on prod"
+                script{
+                    test("PROD")
+                }
             }
         }
     }
+    post {
+        failure{
+            script{
+                echo "Pipeline failure..sending notif"
+                //invoke discord plugin
+            }
+        }
+        cleanup{
+            echo "Cleanup"
+        }
+    }
+}
+def build(String tag, String dockerfile){
+    echo "Building ${tag} image for api-tests base ${dockerfile}"
+    sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    sh "docker build -t ${tag} . -f ${dockerfile}"
+    sh "docker push ${tag}"
+}
+def test(String environment){
+    echo "Testing of python-greetings-app on ${environment} is starting"
+}
+
+def deploy(String environment){
+    echo "Deployment of python-greetings-app on ${environment} is starting"
+    
 }
