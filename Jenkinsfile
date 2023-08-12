@@ -44,7 +44,7 @@ pipeline{
 
             steps{
                 script{
-                    deploy("dev")
+                    deploy("prod")
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline{
 
             steps{
                 script{
-                    test("dev")
+                    test("prod")
                 }
             }
         }
