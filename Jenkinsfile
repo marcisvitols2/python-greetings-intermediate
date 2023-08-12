@@ -31,20 +31,17 @@ pipeline{
         }
         stage('test-dev'){
             parallel{
-                stage('Tests for New Greeting suit'){
+                stage('Tests for New Greetings Suite'){
                     steps{
                         script{
-                            load(testBySuites.groovy).testBySuites("DEV","New Greetings")    
-                            test("DEV")
+                            load("testBySuites.groovy").testBySuites("DEV", "New Greetings Suite")
                         }
                     }
-                    
                 }
-                stage('Tests for Old Greeting suit '){
+                stage('Tests for Old Greetings Suite'){
                     steps{
                         script{
-                            load(testBySuites.groovy).testBySuites("DEV","Old Greetings")   
-                            test("DEV")
+                            load("testBySuites.groovy").testBySuites("DEV", "Old Greetings Suite")
                         }
                     }
                 }
