@@ -71,6 +71,11 @@ pipeline{
         }
     }
     post {
+        always{
+            script{
+                discordSend description: "Jenkins Pipeline Build - Marcis", footer: "Footer Text", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1139668547946168561/ZHUF4ww-auCPadJknX44uhBS1utUe0SzBEWXrVmMZVFujKLfMY6a6l7L33fEQd9G-_4p"
+            }
+        }
         failure{
             script{
                 echo "Pipeline failure..sending notif"
@@ -96,6 +101,7 @@ def test(String test_environment){
     //     sh "docker exec api_tests_runner_${test_environment} cucumber PLATFORM=${test_environment} --format html --out test-output/report.html"     }
     // finally{
     //     sh "docker cp api_tests_runner_${test_environment}:/api-tests/test-output/report.html report_${test_environment}.html"
+    //     sh "docker ps"
     //     sh "docker rm -f api_tests_runner_${test_environment}"
     // }
 
