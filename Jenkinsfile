@@ -29,7 +29,7 @@ pipeline{
 
             steps{
                 script{
-                    test("dev")
+                    test("DEV")
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline{
 
             steps{
                 script{
-                    test("prod")
+                    test("PRD")
                 }
             }
         }
