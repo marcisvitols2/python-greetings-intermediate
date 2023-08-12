@@ -30,10 +30,16 @@ pipeline{
             }
         }
         stage('test-dev'){
-
-            steps{
-                script{
-                    test("DEV")
+            parallel{
+                stage('Tests for New Greeting suit'){
+                    script{
+                         test("DEV")
+                    }
+                }
+                stage('Tests for Old Greeting suit '){
+                    script{
+                         test("DEV")
+                    }
                 }
             }
         }
